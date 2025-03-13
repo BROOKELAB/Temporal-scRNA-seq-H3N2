@@ -28,14 +28,14 @@ https://support.10xgenomics.com/single-cell-gene-expression/software/downloads/l
 
 -1- Use cellranger count (cellranger v7.1.0) for alignment, filtering, and barcode/UMI counting. 
 This takes uses FASTQ as input and provides multiple file outputs (CSV, BAM, MEX, and H5). 
-	- txt file for input: files_A549.txt or 
-	- Script for cellranger counts: cellranger_count_A549.sh
+- txt file for input: files_A549.txt 
+- Script for cellranger counts: cellranger_count_A549.sh
 
 -2- Perform cellranger aggr to aggregate all samples generated from one experiment, including
 experimental conditions and replicates. This analysis requires .h5 files as input and provides a
 list of tsv files and filtered matrixes that can be used for downstream analysis. 
-	- csv file for input: AggrList_A549.csv 
-	- Script for cellranger aggr: aggr_all_A549.sh
+- csv file for input: AggrList_A549.csv 
+- Script for cellranger aggr: aggr_all_A549.sh
 
 
 ### Script: A549_seurat.R
@@ -49,11 +49,11 @@ stimulated genes (ISGs) at different times during influenza infection.
 In addition this analysis uses the outputs of the script Gene_Correlation.R which calculates correlation
 coefficients between cells probability to transition to high_IFNL_state an the expression of close
 to 2000 genes for the mock (0 hrs) timepoint.
-	- Input for the analysis is a filtered seurat object containing only mock (0 hrs) timepoint. In 
+- Input for the analysis is a filtered seurat object containing only mock (0 hrs) timepoint. In 
 	addtion it required two data frames containing the transitionprobability calculated for each cell 
 	present in the seurat object and a the list of genes to compare. The transition probabilities
 	were calulcated using temporal-NoSpliceVelo.
-	- Output is a csv and pdf file containing the correaltion coefficient, p-value, and confidence 
+- Output is a csv and pdf file containing the correaltion coefficient, p-value, and confidence 
 	intervals for each gene in the list and the corresponding correlation plots respectively.
 
 This script further analyzes the transition probabilities obtained from temporal-NoSpliceVelo and
@@ -73,8 +73,8 @@ https://support.10xgenomics.com/single-cell-gene-expression/software/downloads/l
 
 Use cellranger count (cellranger v7.1.0) for alignment, filtering, and barcode/UMI counting. 
 This takes uses FASTQ as input and provides multiple file outputs (CSV, BAM, MEX, and H5). 
-	- txt file for input: files_HBEC.txt or 
-	- Script for cellranger counts: cellranger_count_HBEC.sh
+- txt file for input: files_HBEC.txt
+- Script for cellranger counts: cellranger_count_HBEC.sh
 
 
 ### Script: HBEC_seurat.R
