@@ -7,7 +7,7 @@ This repository contains scripts and analysis pipelines used to quantify the exp
 
 The reference assembly scripts can be found in **BROOKELAB/SingleCell**. The analysis was performed using **Cell Ranger** on a **10X Chromium Single-Cell** dataset, including:  
 
-- Human alveolar epithelial cells (**A549**) infected with **A/Perth/16/2009 (Perth09)** at different time points.  
+- Human alveolar epithelial cells (**A549**) infected with **A/Perth/16/2009 (Perth09)** at different timepoints.  
 - Uninfected/untreated human bronchial epithelial cells (**HBECs**).  
 
 ### **Analysis Pipeline Includes**  
@@ -16,12 +16,13 @@ The reference assembly scripts can be found in **BROOKELAB/SingleCell**. The ana
 ✅ Dimensionality reduction  
 ✅ Quantification of gene expression frequencies  
 ✅ Correlation analysis  
+✅ Cell type annotation 
 
 ---
 
 ## **Requirements**  
 
-Ensure that **R (v4.3.2)** is installed and accessible from the command line.  
+Ensure that **R (v4.3.2)** is installed and accessible.  
 
 ### **Required R Packages**  
 The following R packages are required:  
