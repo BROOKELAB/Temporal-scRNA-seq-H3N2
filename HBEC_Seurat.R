@@ -406,7 +406,49 @@ ggplot(cell_counts, aes(x = library, y = fraction, fill = customclassif)) +
   )
 
 # Save the bar plot as a PNG file
-ggsave("uninfected_bar_fract.png", path = "/Users/joelrivera/Downloads", width = 5, height = 3.25, units = "in", dpi = 300)
+ggsave("uninfected_bar_fract.png", width = 5, height = 3.25, units = "in", dpi = 300)
+
+# Count the number of cells expressing each gene per library and cell type
+cell_counts <- uninfected_long %>%
+  mutate(expressed = counts > 0) %>%  # Create a boolean column indicating gene expression
+  group_by(library, customclassif, gene) %>%  # Group by library, cell type, and gene
+  summarise(count = sum(expressed), .groups = "drop")  # Sum up the number of expressing cells per group
+
+# Compute the total number of cells per cell type per library
+total_cells_per_type <- uninfected_long %>%
+  group_by(library, customclassif) %>%  # Group by library and cell type
+  summarise(total_cells = n(), .groups = "drop")  # Count total number of cells in each group
+
+# Merge expression counts with total cell counts and normalize by cell type frequency
+cell_counts <- left_join(cell_counts, total_cells_per_type, by = c("library", "customclassif")) %>%
+  mutate(fraction_type = (count / total_cells))  # Compute the fraction of ISG-positive cells per cell type
+
+# Define custom colors for cell types
+celltype_colors <- c("#c3c0b5", "#e07a5f", "#3d405b", "#81b29a", "#f2cc8f", "#9c6644")
+
+# Generate scatter plot showing the fraction of ISG-positive cells per donor
+ggplot(cell_counts, aes(x = library, y = fraction_type, color = customclassif)) +
+  geom_point(position = position_jitter(width = 0.2, height = 0), size = 2, alpha = 0.6) +  # Jittered points to avoid overlap
+  scale_y_continuous(limits = c(0, 0.2), breaks = c(0.00, 0.05, 0.10, 0.15, 0.20)) +  # Set y-axis limits and breaks
+  scale_color_manual(values = celltype_colors) +  # Assign custom colors to cell types
+  labs(x = "Donors", y = "Fraction ISG Positive Cells", color = "Cell Type") +  # Axis and legend labels
+  theme_classic() +  # Apply a clean theme
+  facet_wrap(~factor(gene, levels = c("OASL", "IFIT3", "DDX60", "ISG15", "IRF1")), ncol = 3) +  # Separate plots by gene, arranged in 3 columns
+  theme(
+    text = element_text(family = "Arial", color = "black"),  # Set text font and color
+    axis.title = element_text(face = "bold", size = 10, color = "black"),  # Bold axis titles
+    axis.title.x = element_text(face = "bold", size = 10, color = "black", hjust = 0.5),  # Center x-axis title
+    axis.text = element_text(size = 8, color = "black"),  # Set axis text size and color
+    axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),  # Rotate x-axis labels for readability
+    legend.title = element_text(face = "bold", size = 10, color = "black", hjust = 0.5),  # Bold legend title
+    legend.text = element_text(size = 8, color = "black"),  # Set legend text size
+    plot.title = element_text(face = "bold", size = 8, color = "black", hjust = 0.5),  # Set plot title style
+    legend.key.size = unit(0.1, "in"),  # Adjust legend key size
+    strip.text = element_text(face = "italic", size = 8)  # Italicize facet labels
+  )
+
+# Save the plot as a PNG file
+ggsave("uninfected_bar_fract_celltype.png",width = 5, height = 3.25, units = "in", dpi = 300)  # Save at 300 dpi for high resolution
 
 sessionInfo()
 
