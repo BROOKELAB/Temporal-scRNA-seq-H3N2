@@ -1,0 +1,4 @@
+Lib1	uninfected1	../raw_data
+Lib2	uninfected2	../raw_data
+Lib3	Unt_0	../raw_data
+Lib4	SM1_1	../raw_data

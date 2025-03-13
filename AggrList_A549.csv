@@ -1,0 +1,12 @@
+sample_id,molecule_h5,time
+Uninfected,../Uninfected/outs/molecule_info.h5,0hrs
+Infected_8hrs_1,../Infected_8hrs_1/outs/molecule_info.h5,8hrs
+Infected_8hrs_2,../Infected_8hrs_2/outs/molecule_info.h5,8hrs
+Infected_10hrs_1,../Infected_10hrs_1/outs/molecule_info.h5,10hrs
+Infected_10hrs_2,../Infected_10hrs_2/outs/molecule_info.h5,10hrs
+Infected_12hrs_1,../Infected_12hrs_1/outs/molecule_info.h5,12hrs
+Infected_12hrs_2,../Infected_12hrs_2/outs/molecule_info.h5,12hrs
+Infected_14hrs_1,../Infected_14hrs_1/outs/molecule_info.h5,14hrs
+Infected_14hrs_2,../Infected_14hrs_2/outs/molecule_info.h5,14hrs
+Infected_16hrs_1,../Infected_16hrs_1/outs/molecule_info.h5,16hrs
+Infected_16hrs_2,../Infected_16hrs_2/outs/molecule_info.h5,16hrs
