@@ -1,95 +1,119 @@
-# Temporal-scRNA-seq-H3N2
-### 10X Chromium single cell scripts
-#### Intrinsic OASL expression licenses interferon induction during influenza A virus infection
+# **Temporal-scRNA-seq-H3N2**
+### **10X Chromium Single-Cell RNA-seq Analysis**  
+#### **Intrinsic OASL expression licenses interferon induction during influenza A virus infection**
 
-## Analysis Overview:
-This analysis are describe the approach used to quantify expression of interferona and interferon 
-stimulated genes in infected and uninfected cells using scRNA-seq. Scripts required for reference 
-assembly can be found in BROOKELAB/SingleCell. 
+## **Overview**  
+This repository contains scripts and analysis pipelines used to quantify the expression of interferons and interferon-stimulated genes (ISGs) in infected and uninfected cells using single-cell RNA sequencing (scRNA-seq).  
 
-This analysis was performed using Cell Ranger on a 10X Chromium Single Cell experiment of human 
-alveolar epithelial cells (A549) collected at different times during infection with A/Perth/16/2009
-(Perth09). Also to Single Cell experiments of uninfected/untreated human bronchial epithelial 
-cells (HBECs). The analysis performed here include quality control, filtering, normalization, annotation, 
-dimensional reduction, quantification of gene expression frequencies, and correlation analysis.
+The reference assembly scripts can be found in **BROOKELAB/SingleCell**. The analysis was performed using **Cell Ranger** on a **10X Chromium Single-Cell** dataset, including:  
 
-### Requirements:
-The scripts requires R to be installed and made available from the command line * R (v4.3.2)
+- Human alveolar epithelial cells (**A549**) infected with **A/Perth/16/2009 (Perth09)** at different time points.  
+- Uninfected/untreated human bronchial epithelial cells (**HBECs**).  
 
-The following R packages are also required: * Seurat (v5.1.0) * scater (v1.30.0) * 
-scran (v1.30.2) * sctransform (v0.4.1) * ggplot2 (v3.5.1) * dplyr (v1.1.4) * 
-glmGamPoi (v1.12.2) * tidyr (v1.3.1) * forcats (v1.0.0)
+### **Analysis Pipeline Includes**  
+✅ Quality control and filtering  
+✅ Normalization and annotation  
+✅ Dimensionality reduction  
+✅ Quantification of gene expression frequencies  
+✅ Correlation analysis  
 
+---
 
-### Preliminary steps for A549s: 
-Raw reads were demultiplexed and mapped to a host/virus hybrid reference using the 10X Chromium
-Cell Ranger software package:
-https://support.10xgenomics.com/single-cell-gene-expression/software/downloads/latest
+## **Requirements**  
 
--1- Use cellranger count (cellranger v7.1.0) for alignment, filtering, and barcode/UMI counting. 
-This takes uses FASTQ as input and provides multiple file outputs (CSV, BAM, MEX, and H5). 
-- txt file for input: files_A549.txt 
-- Script for cellranger counts: cellranger_count_A549.sh
+Ensure that **R (v4.3.2)** is installed and accessible from the command line.  
 
--2- Perform cellranger aggr to aggregate all samples generated from one experiment, including
-experimental conditions and replicates. This analysis requires .h5 files as input and provides a
-list of tsv files and filtered matrixes that can be used for downstream analysis. 
-- csv file for input: AggrList_A549.csv 
-- Script for cellranger aggr: aggr_all_A549.sh
+### **Required R Packages**  
+The following R packages are required:  
+- `Seurat (v5.1.0)`  
+- `scater (v1.30.0)`  
+- `scran (v1.30.2)`  
+- `sctransform (v0.4.1)`  
+- `ggplot2 (v3.5.1)`  
+- `dplyr (v1.1.4)`  
+- `glmGamPoi (v1.12.2)`  
+- `tidyr (v1.3.1)`  
+- `forcats (v1.0.0)`  
 
+---
 
-### Script: A549_seurat.R
+## **Preliminary Processing for A549 Cells**  
 
-The script performs preliminary filtering (empty drops, cell cycle calling, filter cells by
-detected genes, filter genes by min cells, double calling) and then calculates viral read
-percentages to call infection status and viral gene presence/absence, resulting in normalized seurat
-object for future analysis. This analysis is used to determine expression of interferons and interferon
-stimulated genes (ISGs) at different times during influenza infection.
+Raw reads were demultiplexed and mapped to a host-virus hybrid reference using the **10X Chromium Cell Ranger** software:  
+🔗 [10X Genomics Single-Cell Gene Expression Software](https://support.10xgenomics.com/single-cell-gene-expression/software/downloads/latest)  
 
-In addition this analysis uses the outputs of the script Gene_Correlation.R which calculates correlation
-coefficients between cells probability to transition to high_IFNL_state an the expression of close
-to 2000 genes for the mock (0 hrs) timepoint.
-- Input for the analysis is a filtered seurat object containing only mock (0 hrs) timepoint. In 
-	addtion it required two data frames containing the transitionprobability calculated for each cell 
-	present in the seurat object and a the list of genes to compare. The transition probabilities
-	were calulcated using temporal-NoSpliceVelo.
-- Output is a csv and pdf file containing the correaltion coefficient, p-value, and confidence 
-	intervals for each gene in the list and the corresponding correlation plots respectively.
+### **Steps**  
 
-This script further analyzes the transition probabilities obtained from temporal-NoSpliceVelo and
-determines the probability across cells at different times during infection as well as the fraction
-cells with high probabilities of transitioning into terminal state of interest. In addition it uses the
-output from the Gene_Correlation.R to filter genes basede on correlation coefficient and determines 
-their distinct expression within the mock (0 hrs) population.
+1️⃣ **Cell Ranger Count**  
+- Aligns reads, filters cells, and performs barcode/UMI counting.  
+- Input: FASTQ files  
+- Output: CSV, BAM, MEX, H5 files  
+- Input file: `files_A549.txt`  
+- Script: `cellranger_count_A549.sh`  
 
+2️⃣ **Cell Ranger Aggregation (aggr)**  
+- Aggregates samples across experimental conditions and replicates.  
+- Input: `.h5` files  
+- Output: TSV files and filtered matrices for downstream analysis  
+- Input file: `AggrList_A549.csv`  
+- Script: `aggr_all_A549.sh`  
 
-### Preliminary steps for HBECs: 
-Raw reads were demultiplexed and mapped to a host/virus hybrid reference using the 10X Chromium.
-These were aligned against a reference sequence which included the H1N1 A/California/07/2009 genome 
-to confirm the mock populations since some of the ones used originated from experiments comparing 
-H1N1-infected and uninfected populations. 
-Cell Ranger software package:
-https://support.10xgenomics.com/single-cell-gene-expression/software/downloads/latest
+---
 
-Use cellranger count (cellranger v7.1.0) for alignment, filtering, and barcode/UMI counting. 
-This takes uses FASTQ as input and provides multiple file outputs (CSV, BAM, MEX, and H5). 
-- txt file for input: files_HBEC.txt
-- Script for cellranger counts: cellranger_count_HBEC.sh
+## **A549 scRNA-seq Analysis**  
 
+### **Script: `A549_seurat.R`**  
 
-### Script: HBEC_seurat.R
+This script performs:  
+✅ Preliminary filtering (empty drops, cell cycle calling, doublet removal, gene/cell filtering)  
+✅ Infection status determination based on viral read percentages  
+✅ Normalization and creation of a **Seurat object** for downstream analysis  
 
-The script performs preliminary filtering (empty drops, cell cycle calling, filter cells by
-detected genes, filter genes by min cells, double calling) and then calculates viral read
-percentages to call infection status and viral gene presence/absence, resulting in normalized seurat
-object for future analysis. This analysis is used to determine expression of interferons and interferon
-stimulated genes (ISGs) in publicly available datasets from uninfected/untreated primary human 
-bronchial epithelial cells.
+**Gene Correlation Analysis:**  
+- Uses outputs from `Gene_Correlation.R` to compute correlation coefficients between gene expression and the probability of transitioning to a **high IFNL state**.  
+- Input:  
+  - Filtered **Seurat** object (mock/0-hour timepoint).  
+  - Data frames with transition probabilities per cell.  
+  - Gene list for correlation analysis.  
+- Output:  
+  - **CSV file**: Correlation coefficients, p-values, and confidence intervals.  
+  - **PDF file**: Correlation plots.  
 
-In addition this script determines cell types present in the different libraries of the primary HBECs. ScType
-(https://github.com/IanevskiAleksandr/sc-type) was used to determine the distinct cell types present in the 
-populations. The annotation was validated and cells types that did not fit they're description were annotated 
-based on expression profiles. Once cells were annotated intrinsic ISG expression was assessed across libraries
-and cell types. 
+Additional analyses:  
+✅ Temporal-NoSpliceVelo transition probability analysis  
+✅ Filtering of genes based on correlation coefficients  
+✅ Differential expression analysis in mock populations  
 
+---
 
+## **Preliminary Processing for HBECs**  
+
+Raw reads were demultiplexed and mapped to a **host-virus hybrid reference** using **10X Chromium Cell Ranger**.  
+For validation, sequences were aligned against the **H1N1 A/California/07/2009 genome** to confirm the mock populations.  
+
+🔗 [10X Genomics Single-Cell Gene Expression Software](https://support.10xgenomics.com/single-cell-gene-expression/software/downloads/latest)  
+
+### **Steps**  
+
+1️⃣ **Cell Ranger Count**  
+- Aligns reads, filters cells, and performs barcode/UMI counting.  
+- Input: FASTQ files  
+- Output: CSV, BAM, MEX, H5 files  
+- Input file: `files_HBEC.txt`  
+- Script: `cellranger_count_HBEC.sh`  
+
+---
+
+## **HBEC scRNA-seq Analysis**  
+
+### **Script: `HBEC_seurat.R`**  
+
+This script performs:  
+✅ Preliminary filtering (empty drops, cell cycle calling, doublet removal, gene/cell filtering)  
+✅ Integration of different scRNA-seq libraries into one **Seurat object**
+✅ Normalization of a **Seurat object** for downstream analysis  
+
+Additional analyses:  
+✅ **Cell type annotation** using [ScType](https://github.com/IanevskiAleksandr/sc-type)  
+✅ **Manual annotation** for misclassified cells based on gene expression profiles  
+✅ **Intrinsic ISG expression assessment** across different cell types  
