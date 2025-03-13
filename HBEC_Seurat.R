@@ -426,7 +426,7 @@ cell_counts <- left_join(cell_counts, total_cells_per_type, by = c("library", "c
 # Define custom colors for cell types
 celltype_colors <- c("#c3c0b5", "#e07a5f", "#3d405b", "#81b29a", "#f2cc8f", "#9c6644")
 
-# Generate scatter plot showing the fraction of ISG-positive cells per donor
+# Generate scatter plot showing the fraction of ISG-positive cells per donor (Figure 5E)
 ggplot(cell_counts, aes(x = library, y = fraction_type, color = customclassif)) +
   geom_point(position = position_jitter(width = 0.2, height = 0), size = 2, alpha = 0.6) +  # Jittered points to avoid overlap
   scale_y_continuous(limits = c(0, 0.2), breaks = c(0.00, 0.05, 0.10, 0.15, 0.20)) +  # Set y-axis limits and breaks
