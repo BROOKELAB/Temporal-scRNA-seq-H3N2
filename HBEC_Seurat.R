@@ -13,8 +13,8 @@ library(forcats)  # Added forcats for handling factors and working with categori
 
 # Read aggregate file using Read10X_h5 function
 lib1 <- Read10X_h5("/outs/filtered_feature_bc_matrix.h5")
+lib2 <- Read10X_h5("outs/filtered_feature_bc_matrix.h5")
 lib3 <- Read10X_h5("outs/filtered_feature_bc_matrix.h5")
-lib4 <- Read10X_h5("outs/filtered_feature_bc_matrix.h5")
 lib4 <- Read10X_h5("outs/filtered_feature_bc_matrix.h5")
 
 # Create Seurat object from the filtered feature barcode matrix for each dataset
