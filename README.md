@@ -1,6 +1,6 @@
 # **Temporal-scRNA-seq-H3N2**
 ### **10X Chromium Single-Cell RNA-seq Analysis**  
-#### **Intrinsic OASL expression licenses interferon induction during influenza A virus infection**
+Scripts associated with [Intrinsic OASL expression licenses interferon induction during influenza A virus infection](https://doi.org/10.1101/2025.03.14.643375), Rivera-Cardona et al. (2025). 
 
 ## **Overview**  
 This repository contains scripts and analysis pipelines used to quantify the expression of interferons and interferon-stimulated genes (ISGs) in infected and uninfected cells using single-cell RNA sequencing (scRNA-seq).  
