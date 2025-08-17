@@ -118,3 +118,36 @@ Additional analyses:
 ✅ **Cell type annotation** using [ScType](https://github.com/IanevskiAleksandr/sc-type)  
 ✅ **Manual annotation** for misclassified cells based on gene expression profiles  
 ✅ **Intrinsic ISG expression assessment** across different cell types  
+
+---
+
+## **Hallmark Gene Set Enrichment & Heatmap Analysis**
+
+### **Script: `DGE_Hallmark.R`**
+
+This script evaluates gene set enrichment and visualizes expression patterns across different IFNL states using **MSigDB Hallmark gene sets**.  
+
+**Steps performed:**  
+✅ Loads the Seurat object with cell metadata and fate probabilities  
+✅ Uses Seurat’s `FindAllMarkers` function (Wilcoxon rank-sum test by default)  
+✅ Identifies DEGs between annotated **end states** (High IFNL, Low IFNL 1-3)  
+✅ Joins gene expression data with **MSigDB Hallmark gene sets** (`msigdbr`)  
+✅ Computes average expression per gene set across annotated **end states** (High IFNL, Low IFNL 1-3)  
+✅ Filters for top variable gene sets based on coefficient of variation  
+✅ Scales gene set expression (z-score per gene set) for heatmap visualization  
+
+**Outputs:**  
+- **Heatmaps (SVG)**:  
+  - **All IFNL states**: Comparison of High vs Low IFNL states  
+  - **Low IFNL states only**: Detailed view of low IFNL populations  
+- **Filtered expression matrices** for reproducible plotting  
+
+**Key features:**  
+- Row-wise scaling (z-score) ensures comparability between gene sets  
+- Row and column labels formatted for publication-quality figures  
+- Color-coded heatmaps using `ComplexHeatmap` and `circlize`  
+
+This analysis helps to:  
+- Identify **gene sets enriched** in different IFNL states  
+- Visualize **dynamic transcriptional programs** across cell populations  
+- Inform downstream **functional interpretation** of interferon responses  
