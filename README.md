@@ -126,7 +126,7 @@ Additional analyses:
 ### **Script: `DGE_Hallmark.R`**
 
 This script evaluates gene set enrichment and visualizes expression patterns across different IFNL states using **MSigDB Hallmark gene sets**.  
-
+Liberzon, A., Birger, C., Thorvaldsdóttir, H., Ghandi, M., Mesirov, J.P., and Tamayo, P. (2015). The Molecular Signatures Database Hallmark Gene Set Collection. cels 1, 417–425. https://doi.org/10.1016/j.cels.2015.12.004.<img width="468" height="38" alt="image" src="https://github.com/user-attachments/assets/bb6d95a0-52fc-4cf1-9b48-adcca8b915b3" />  
 **Steps performed:**  
 ✅ Loads the Seurat object with cell metadata and fate probabilities  
 ✅ Uses Seurat’s `FindAllMarkers` function (Wilcoxon rank-sum test by default)  
